@@ -1,0 +1,85 @@
+```html
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>退休年龄计算器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto p-8">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <div class="mb-4">
+                <label class="block text-gray-700 text-lg font-bold mb-2">性别/职务：</label>
+                <select id="gender" class="block w-full p-2 border border-gray-300 rounded-lg">
+                    <option value="male">男性</option>
+                    <option value="female_worker">女性-工人</option>
+                    <option value="female_cadre">女性-干部</option>
+                </select>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-lg font-bold mb-2">出生日期：</label>
+                <input type="month" id="birthDate" class="block w-full p-2 border border-gray-300 rounded-lg" />
+            </div>
+            <div class="flex space-x-4 mb-6">
+                <button id="calculateBtn" class="bg-blue-500 text-white py-2 px-4 rounded-lg">开始计算</button>
+                <button id="clearBtn" class="bg-gray-500 text-white py-2 px-4 rounded-lg">清除</button>
+            </div>
+            <div id="result" class="mt-6">
+                <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
+                    <tbody>
+                        <tr class="border-b">
+                            <td class="p-4 text-gray-700">退休年龄</td>
+                            <td id="retirementAge" class="p-4 text-blue-600"></td>
+                        </tr>
+                        <tr>
+                            <td class="p-4 text-gray-700">退休日期</td>
+                            <td id="retirementDate" class="p-4 text-red-600"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const genderType = document.getElementById('gender').value;
+            const birthDateValue = document.getElementById('birthDate').value;
+            if (birthDateValue) {
+                const birthDate = new Date(birthDateValue);
+                const birthYear = birthDate.getFullYear();
+                const birthMonth = birthDate.getMonth() + 1;
+                let retirementBaseAge = 50; 
+                let additionalMonths = 0;
+
+                if (genderType === 'male') {
+                    if (birthYear >= 1965 && birthYear <= 1976) {
+                        const startYear = 1965;
+                        additionalMonths = calculateAdditionalMonths(birthYear, birthMonth, startYear, 4) + 1;
+                    } else if (birthYear > 1976) {
+                        additionalMonths = 36; 
+                    }
+                    retirementBaseAge = 60; 
+                } else if (genderType === 'female_cadre') {
+                    if (birthYear >= 1970 && birthYear <= 1981) {
+                        const startYear = 1970;
+                        additionalMonths = calculateAdditionalMonths(birthYear, birthMonth, startYear, 4) + 1;
+                    } else if (birthYear > 1981) {
+                        additionalMonths = 36; 
+                    }
+                    retirementBaseAge = 55;
+                } else if (genderType === 'female_worker') {
+                    if (birthYear >= 1975 && birthYear <= 1984) {
+                        const startYear = 1975;
+                        additionalMonths = calculateAdditionalMonths(birthYear, birthMonth, startYear, 2) + 1;
+                    } else if (birthYear > 1984) {
+                        additionalMonths = 60; 
+                    }
+                    retirementBaseAge = 50; 
+                }
+
+                const totalMonths = additionalMonths % 12;
+                const additionalYears = Math.floor(additionalMonths / 12);
+                const
