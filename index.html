@@ -82,4 +82,33 @@
 
                 const totalMonths = additionalMonths % 12;
                 const additionalYears = Math.floor(additionalMonths / 12);
-                const
+                const retirementYear = birthYear + retirementBaseAge + additionalYears;
+                const retirementMonth = birthMonth - 1 + totalMonths;
+                const retirementDate = new Date(retirementYear, retirementMonth, 1);
+
+                document.getElementById('retirementAge').innerText = ${retirementBaseAge + additionalYears}岁${totalMonths}个月;
+                document.getElementById('retirementDate').innerText = ${retirementDate.getFullYear()}年${retirementDate.getMonth() + 1}月;
+            } else {
+                alert("请选择出生日期！");
+            }
+        });
+
+        function calculateAdditionalMonths(year, month, startYear, interval) {
+            let monthsFromStart = (year - startYear) * 12 + month - 1;
+            return Math.floor(monthsFromStart / interval); 
+        }
+
+        document.getElementById('clearBtn').addEventListener('click', function() {
+            document.getElementById('retirementAge').innerText = '';
+            document.getElementById('retirementDate').innerText = '';
+            document.getElementById('birthDate').value = '';
+        });
+    </script>
+
+
+</body>
+</html>
+
+```
+
+```
