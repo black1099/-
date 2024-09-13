@@ -85,8 +85,8 @@
                 const retirementMonth = birthMonth - 1 + totalMonths;
                 const retirementDate = new Date(retirementYear, retirementMonth, 1);
 
-                document.getElementById('retirementAge').innerText = ${retirementBaseAge + additionalYears}岁${totalMonths}个月;
-                document.getElementById('retirementDate').innerText = ${retirementDate.getFullYear()}年${retirementDate.getMonth() + 1}月;
+                document.getElementById('retirementAge').innerText = `${retirementBaseAge + additionalYears}岁${totalMonths}个月`;
+                document.getElementById('retirementDate').innerText = `${retirementDate.getFullYear()}年${retirementDate.getMonth() + 1}月`;
             } else {
                 alert("请选择出生日期！");
             }
